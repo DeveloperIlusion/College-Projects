@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_constructors, unused_import, unused_local_variable, sort_child_properties_last, unnecessary_brace_in_string_interps
+
+import 'package:teste/stateful.dart';
+import 'package:teste/stateless.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -7,119 +11,198 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Widgets Básicos',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        primaryColor: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      initialRoute: '/home',
+      routes: {
+        '/home': (context) => WidgetLogin(),
+        '/stateful': (context) => StatefulPage(title: 'Widgets Básicos'),
+        '/stateless': (context) => StatelessPage(),
+      },
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class WidgetLogin extends StatefulWidget {
+  const WidgetLogin({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<WidgetLogin> createState() => _WidgetLoginState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _WidgetLoginState extends State<WidgetLogin> {
+  TextStyle style =
+      TextStyle(fontFamily: 'Montserrat', fontWeight: FontWeight.bold);
 
-  void _incrementCounter() {
+  String logado = 'Aguardando credenciais';
+  String email = '';
+  String password = '';
+
+  void loginRealizado() {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      if (email == 'diego.fernandes@santamarcelina.edu.br' &&
+          password == '12345') {
+        Navigator.pushNamed(context, '/stateful');
+      } else {
+        Navigator.pushReplacementNamed(context, '/stateless');
+      }
+    });
+  }
+
+  void statefulPage() {
+    setState(() {
+      Navigator.pushNamed(context, '/stateful');
+    });
+  }
+
+  void statelessPage() {
+    setState(() {
+      Navigator.pushNamed(context, '/stateless');
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    final emailField = TextField(
+      onChanged: (text) {
+        email = text;
+      },
+      obscureText: false,
+      style: style,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Informe um e-mail válido',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
+    );
+
+    final passwordField = TextField(
+      onChanged: (text) {
+        password = text;
+      },
+      obscureText: true,
+      style: style,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+        hintText: 'Informe uma senha válida',
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+      ),
+    );
+
+    final buttonLogin = ButtonTheme(
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.purple,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        child: Text(
+          'Login',
+          style: style.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: loginRealizado,
+      ),
+    );
+
+    final buttonStateful = ButtonTheme(
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        child: Text(
+          'Stateful Page',
+          style: style.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: statefulPage,
+      ),
+    );
+
+    final buttonStateless = ButtonTheme(
+      minWidth: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.green,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30.0),
+          ),
+        ),
+        child: Text(
+          'Stateless Page',
+          style: style.copyWith(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        onPressed: statelessPage,
+      ),
+    );
+
+    return Scaffold(
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            padding: EdgeInsets.all(40.0),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 200.0,
+                  child: Image.asset(
+                    "assets/images/Bulls_Bruno_Cassiano.png",
+                    fit: BoxFit.cover,
+                    alignment:  Alignment.center,
+                    height: 200,
+                    width: 200,
+                  )
+                  /**
+                   * Image.network(
+                   *  'https://www.tailorbrands.com/wp-content/uploads/2020/07/mcdonalds-logo.jpg',
+                   *  fit: BoxFit.contain,
+                   *  aligment: Aligment.center,
+                   *  height: 150,
+                   *  width: 30,
+                   * ),
+                   */
+                ),
+                SizedBox(height: 40.0),
+                emailField,
+                SizedBox(height: 40.0),
+                passwordField,
+                SizedBox(height: 40.0),
+                buttonLogin,
+                SizedBox(height: 40.0),
+                buttonStateful,
+                SizedBox(height: 40.0),
+                buttonStateless,
+                SizedBox(height: 40.0),
+                Text('Status do login: ${logado}',
+                    style: Theme.of(context).textTheme.headlineMedium),
+              ],
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+          ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
