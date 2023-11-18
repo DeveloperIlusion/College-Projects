@@ -1,0 +1,138 @@
+unit uEndereco;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfmrEndereco = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeCidade: TDBEdit;
+    dbeNumero: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    dbeEstado: TDBEdit;
+    dbeCEP: TDBEdit;
+    dbeRua: TDBEdit;
+    Label3: TLabel;
+    Label5: TLabel;
+    Label6: TLabel;
+    dbeComplemento: TDBEdit;
+    Label4: TLabel;
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+    { Private declarations }
+  public
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+procedure TfmrEndereco.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo aluno';
+      uConexao.queryEndereco.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando aluno';
+      uConexao.queryEndereco.Edit;
+    end;
+  end;
+  dbeCidade.SetFocus;
+end;
+
+procedure TfmrEndereco.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+procedure TfmrEndereco.Cancelar;
+begin
+  uConexao.queryEndereco.Cancel;
+  Close;
+end;
+
+procedure TfmrEndereco.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Endereço';
+  Cancelar;
+end;
+
+procedure TfmrEndereco.Gravar;
+begin
+  try
+    uConexao.queryEndereco.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryAluno.Refresh;
+  Close;
+end;
+
+procedure TfmrEndereco.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryAluno) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeCidade.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome da cidade.');
+    dbeCidade.SetFocus;
+    Abort;
+  end;
+  if dbeEstado.Text = EmptyStr then
+  begin
+    Alerta('Preencha o número do estado.');
+    dbeEstado.SetFocus;
+    Abort;
+  end;
+  if dbeRua.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome da rua.');
+    dbeRua.SetFocus;
+    Abort;
+  end;
+  if dbeNumero.Text = EmptyStr then
+  begin
+    Alerta('Preencha o número da residência.');
+    dbeNumero.SetFocus;
+    Abort;
+  end;
+  if dbeCEP.Text = EmptyStr then
+  begin
+    Alerta('Preencha o CEP.');
+    dbeCEP.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfmrEndereco.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

@@ -1,0 +1,151 @@
+unit uItensOrcamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfrmItensOrcamento = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeNome: TDBEdit;
+    dbePosicao: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    Label3: TLabel;
+    dblOrcamento: TDBLookupComboBox;
+    dbeValor: TDBEdit;
+    dbeObservacao: TDBEdit;
+    Label4: TLabel;
+    dbeQuantidade: TDBEdit;
+    lblValor: TLabel;
+    Label5: TLabel;
+    procedure FormActivate(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+    { Private declarations }
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+  public
+    { Public declarations }
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+  end;
+
+var
+  frmItensOrcamento: TfrmItensOrcamento;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+//Define e chama a função que setta o tipo de ação ao abrirmos o form
+procedure TfrmItensOrcamento.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo item orçamento';
+      uConexao.queryItemOrcamento.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando item orçamento';
+      uConexao.queryItemOrcamento.Edit;
+    end;
+  end;
+  dbeProduto.SetFocus;
+end;
+
+procedure TfrmItensOrcamento.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+//Define e setta a função de cancelar o processo e fechar ao query no clique do
+//botão cancelar.
+procedure TfrmItensOrcamento.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Itens Orçamento';
+  Cancelar;
+end;
+
+procedure TfrmItensOrcamento.Cancelar;
+begin
+  uConexao.queryItemOrcamento.Cancel;
+  Close;
+end;
+
+//Define a ação de gravação e a validação dos dados
+procedure TfrmItensOrcamento.Gravar;
+begin
+  try
+    uConexao.queryItemOrcamento.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryItemOrcamento.Refresh;
+  Close;
+end;
+
+procedure TfrmItensOrcamento.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryItemOrcamento) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeNome.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome');
+    dbeNome.SetFocus;
+    Abort;
+  end;
+  if dbePosicao.Text = EmptyStr then
+  begin
+    Alerta('Preencha o posição');
+    dbePosicao.SetFocus;
+    Abort;
+  end;
+  if dbeValor.Text = EmptyStr then
+  begin
+    Alerta('Preencha o valor');
+    dbeValor.SetFocus;
+    Abort;
+  end;
+  if dbeObservacao.Text = EmptyStr then
+  begin
+    Alerta('Preencha a obervação');
+    dbeObservacao.SetFocus;
+    Abort;
+  end;
+  if dbeQuantidade.Text = EmptyStr then
+  begin
+    Alerta('Preencha a quantidade');
+    dbeQuantidade.SetFocus;
+    Abort;
+  end;
+  if dblOrcamento.KeyValue = Null then
+  begin
+    Alerta('Selecione o orçamento');
+    dblOrcamento.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfrmItensOrcamento.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

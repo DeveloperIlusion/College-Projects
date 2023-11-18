@@ -1,0 +1,29 @@
+unit Treino;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TuMain = class(TForm)
+    Navbar: TMainMenu;
+    Navbar1: TMenuItem;
+    Aluno1: TMenuItem;
+    Timer: TTimer;
+    StatusBar: TStatusBar;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  uMain: TuMain;
+
+implementation
+
+{$R *.dfm}
+
+end.

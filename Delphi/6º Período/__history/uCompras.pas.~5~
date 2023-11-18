@@ -1,0 +1,121 @@
+unit uCompras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfrmCompras = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeProduto: TDBEdit;
+    dbeTotal: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    Label3: TLabel;
+    cbCliente: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+    { Private declarations }
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+  public
+    { Public declarations }
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+  end;
+
+var
+  frmCompras: TfrmCompras;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+//Define e chama a função que setta o tipo de ação ao abrirmos o form
+procedure TfrmCompras.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo compra';
+      uConexao.queryCompra.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando compra';
+      uConexao.queryCompra.Edit;
+    end;
+  end;
+  dbeNome.SetFocus;
+end;
+
+procedure TfrmCompras.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+//Define e setta a função de cancelar o processo e fechar ao query no clique do
+//botão cancelar.
+procedure TfrmCompras.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Compras';
+  Cancelar;
+end;
+
+procedure TfrmCompras.Cancelar;
+begin
+  uConexao.queryCompra.Cancel;
+  Close;
+end;
+
+//Define a ação de gravação e a validação dos dados
+procedure TfrmCompras.Gravar;
+begin
+  try
+    uConexao.queryCompra.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryCompra.Refresh;
+  Close;
+end;
+
+procedure TfrmCompras.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryCompra) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeProduto.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome do aluno');
+    dbeProduto.SetFocus;
+    Abort;
+  end;
+  if dbeTotal.Text = EmptyStr then
+  begin
+    Alerta('Preencha a idade do aluno');
+    dbeIdade.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfrmCompras.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

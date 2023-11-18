@@ -1,0 +1,39 @@
+unit Treino;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TuMain = class(TForm)
+    Navbar: TMainMenu;
+    Navbar1: TMenuItem;
+    Aluno1: TMenuItem;
+    mainTimer: TTimer;
+    StatusBar: TStatusBar;
+  private
+    procedure PreencherDadosInformativos;
+  public
+    { Public declarations }
+  end;
+
+var
+  uMain: TuMain;
+
+implementation
+
+procedure TuMain.PreencherDadosInformativos;
+begin
+  StatusBar.Panels[0].Text := DateToStr(Date);
+  StatusBar.Panels[1].Text := TimeToStr(Time);
+  StatusBar.Panels[2].Text := 'ERP da turma ADS 2023';
+end;
+
+procedure TuMain.TimerTimer(Sender: TObject);
+begin
+  PreencherDadosInformativos;
+end;
+
+end.

@@ -1,0 +1,118 @@
+object frmListarEndereco: TfrmListarEndereco
+  Left = 0
+  Top = 0
+  Caption = 'Lista de Endere'#231'os'
+  ClientHeight = 365
+  ClientWidth = 644
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnActivate = FormActivate
+  TextHeight = 15
+  object dbgListarEndereco: TDBGrid
+    Left = 0
+    Top = 24
+    Width = 653
+    Height = 359
+    Align = alCustom
+    DataSource = uConexao.sourceEndereco
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'id'
+        Width = 27
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'numero'
+        Width = 50
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'rua'
+        Width = 113
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cidade'
+        Width = 79
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'estado'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'cep'
+        Width = 55
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'complemento'
+        Width = 240
+        Visible = True
+      end>
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 339
+    Width = 644
+    Height = 26
+    Align = alBottom
+    TabOrder = 1
+    ExplicitTop = 338
+    ExplicitWidth = 640
+    object btnExcluir: TBitBtn
+      Left = 570
+      Top = 0
+      Width = 75
+      Height = 25
+      Caption = 'Excluir'
+      TabOrder = 0
+      OnClick = btnExcluirClick
+    end
+    object btnEditar: TBitBtn
+      Left = 489
+      Top = 1
+      Width = 75
+      Height = 25
+      Caption = 'Editar'
+      TabOrder = 1
+      OnClick = btnEditarClick
+    end
+    object btnInserir: TBitBtn
+      Left = 408
+      Top = 1
+      Width = 75
+      Height = 25
+      Caption = 'Inserir'
+      TabOrder = 2
+      OnClick = btnInserirClick
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 644
+    Height = 25
+    Align = alTop
+    Caption = 'Endere'#231'o'
+    TabOrder = 2
+    ExplicitWidth = 640
+  end
+end

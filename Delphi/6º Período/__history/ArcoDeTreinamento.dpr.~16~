@@ -1,0 +1,24 @@
+program ArcoDeTreinamento;
+
+uses
+  Vcl.Forms,
+  uArcoDeTreinamento in 'uArcoDeTreinamento.pas' {frmArcoDeTreinamento},
+  uDM in 'uDM.pas' {uConexao},
+  uFuncoes in 'uFuncoes.pas',
+  uTipoOperacao in 'uTipoOperacao.pas',
+  uCompras in 'uCompras.pas' {frmCompras},
+  uListarOrcamento in 'uListarOrcamento.pas' {frmListarOrcamento},
+  uListarItensOrcamento in 'uListarItensOrcamento.pas' {frmListarItemOrcamento},
+  uOrcamento in 'uOrcamento.pas' {frmOrcamento};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmArcoDeTreinamento, frmArcoDeTreinamento);
+  Application.CreateForm(TuConexao, uConexao);
+  Application.CreateForm(TfrmListarOrcamento, frmListarOrcamento);
+  Application.CreateForm(TfrmListarItemOrcamento, frmListarItemOrcamento);
+  Application.Run;
+end.

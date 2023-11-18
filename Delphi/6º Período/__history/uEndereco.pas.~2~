@@ -1,0 +1,111 @@
+unit uEndereco;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfmrEndereco = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeCidade: TDBEdit;
+    dbeNumero: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    procedure FormActivate(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+  private
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+    { Private declarations }
+  public
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+procedure TfrmEndereco.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo aluno';
+      uConexao.queryAluno.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando aluno';
+      uConexao.queryAluno.Edit;
+    end;
+  end;
+  dbeNome.SetFocus;
+end;
+
+procedure TfrmEndereco.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+procedure TfrmEndereco.Cancelar;
+begin
+  uConexao.queryAluno.Cancel;
+  Close;
+end;
+
+procedure TfrmEndereco.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Aluno';
+  Cancelar;
+end;
+
+procedure TfrmEndereco.Gravar;
+begin
+  try
+    uConexao.queryAluno.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryAluno.Refresh;
+  Close;
+end;
+procedure TfrmEndereco.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryAluno) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeNome.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome do aluno');
+    dbeNome.SetFocus;
+    Abort;
+  end;
+  if dbeIdade.Text = EmptyStr then
+  begin
+    Alerta('Preencha a idade do aluno');
+    dbeIdade.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfrmEndereco.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

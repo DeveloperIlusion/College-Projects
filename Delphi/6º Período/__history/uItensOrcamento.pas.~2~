@@ -1,0 +1,128 @@
+unit uItensOrcamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfrmItensOrcamento = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeProduto: TDBEdit;
+    dbeTotal: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    Label3: TLabel;
+    dblCliente: TDBLookupComboBox;
+    procedure FormActivate(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+  private
+    { Private declarations }
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+  public
+    { Public declarations }
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+  end;
+
+var
+  frmItensOrcamento: TfrmItensOrcamento;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+//Define e chama a função que setta o tipo de ação ao abrirmos o form
+procedure TfrmItensOrcamento.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo compra';
+      uConexao.queryCompra.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando compra';
+      uConexao.queryCompra.Edit;
+    end;
+  end;
+  dbeProduto.SetFocus;
+end;
+
+procedure TfrmItensOrcamento.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+//Define e setta a função de cancelar o processo e fechar ao query no clique do
+//botão cancelar.
+procedure TfrmItensOrcamento.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Compras';
+  Cancelar;
+end;
+
+procedure TfrmItensOrcamento.Cancelar;
+begin
+  uConexao.queryCompra.Cancel;
+  Close;
+end;
+
+//Define a ação de gravação e a validação dos dados
+procedure TfrmItensOrcamento.Gravar;
+begin
+  try
+    uConexao.queryCompra.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryCompra.Refresh;
+  Close;
+end;
+
+procedure TfrmItensOrcamento.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryCompra) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeProduto.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome do produto');
+    dbeProduto.SetFocus;
+    Abort;
+  end;
+  if dbeTotal.Text = EmptyStr then
+  begin
+    Alerta('Preencha o valor total da compra');
+    dbeTotal.SetFocus;
+    Abort;
+  end;
+
+  if dblCliente.KeyValue = Null then
+  begin
+    Alerta('Selecione o cliente');
+    dblCliente.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfrmItensOrcamento.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

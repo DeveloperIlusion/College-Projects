@@ -1,0 +1,31 @@
+unit uListarCompras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.StdCtrls, Vcl.Buttons,
+  Vcl.Grids, Vcl.DBGrids, Vcl.ExtCtrls;
+
+type
+  TfrmListarCompras = class(TForm)
+    Panel1: TPanel;
+    dbgListarEndereco: TDBGrid;
+    Panel2: TPanel;
+    btnExcluir: TBitBtn;
+    btnEditar: TBitBtn;
+    btnInserir: TBitBtn;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmListarCompras: TfrmListarCompras;
+
+implementation
+
+{$R *.dfm}
+
+end.

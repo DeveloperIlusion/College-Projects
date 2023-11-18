@@ -1,0 +1,116 @@
+unit uOrcamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Buttons, uTipoOperacao;
+
+type
+  TfrmOrcamento = class(TForm)
+    btnCancelar: TBitBtn;
+    btnGravar: TBitBtn;
+    dbeNome: TDBEdit;
+    dbeData: TDBEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+    tpanel1: TPanel;
+    dbeObservacao: TDBEdit;
+    Label3: TLabel;
+    procedure FormActivate(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+  private
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+    { Private declarations }
+  public
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+    { Public declarations }
+  end;
+implementation
+{$R *.dfm}
+uses uDM, Data.DB, uFuncoes;
+
+procedure TfrmOrcamento.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo orçamento';
+      uConexao.queryOrcamento.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando orçamento';
+      uConexao.queryOrcamento.Edit;
+    end;
+  end;
+  dbeNome.SetFocus;
+end;
+
+procedure TfrmOrcamento.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+procedure TfrmOrcamento.Cancelar;
+begin
+  uConexao.queryOrcamento.Cancel;
+  Close;
+end;
+
+procedure TfrmOrcamento.btnCancelarClick(Sender: TObject);
+begin
+  Caption := 'Orçamento';
+  Cancelar;
+end;
+
+procedure TfrmOrcamento.Gravar;
+begin
+  try
+    uConexao.queryOrcamento.Post;
+  except
+    Erro('Erro ao gravar dados');
+  end;
+  uConexao.queryOrcamento.Refresh;
+  Close;
+end;
+procedure TfrmOrcamento.ValidarDados;
+begin
+  if (RetornaTipoDeOperacaoDaQuery(uConexao.queryOrcamento) = topNavegar) then
+  begin
+    Alerta('Não foi definida se a operação é de inserção ou edição');
+    Abort;
+  end;
+  if dbeNome.Text = EmptyStr then
+  begin
+    Alerta('Preencha o nome do aluno');
+    dbeNome.SetFocus;
+    Abort;
+  end;
+  if dbeData.Text = EmptyStr then
+  begin
+    Alerta('Preencha a idade do aluno');
+    dbeData.SetFocus;
+    Abort;
+  end;
+  if dbeObservacao.Text = EmptyStr then
+  begin
+    Alerta('Preencha a idade do aluno');
+    dbeObservacao.SetFocus;
+    Abort;
+  end;
+end;
+
+procedure TfrmOrcamento.btnGravarClick(Sender: TObject);
+begin
+  ValidarDados;
+  Gravar;
+end;
+
+end.

@@ -1,0 +1,87 @@
+unit uArcoDeTreinamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmArcoDeTreinamento = class(TForm)
+    stbArcoDeTreinamento: TStatusBar;
+    mmArcoDeTreinamento: TMainMenu;
+    Cadastro1: TMenuItem;
+    Aluno: TMenuItem;
+    tmrArcoDeTreinamento: TTimer;
+    Compras: TMenuItem;
+    procedure tmrArcoDeTreinamentoTimer(Sender: TObject);
+    procedure OrcamentoClick(Sender: TObject);
+    procedure ItensOrcamentoClick(Sender: TObject);
+  private
+    procedure PreencherDadosInformativos;
+    procedure ListarOrcamento;
+    procedure ListarItensOrcamento;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmArcoDeTreinamento: TfrmArcoDeTreinamento;
+
+implementation
+
+{$R *.dfm}
+
+  uses
+    uListarOrcamento, uListarItensOrcamento;
+
+  //Define os dados que preenchem a barra de status e os preenche
+  procedure TfrmArcoDeTreinamento.PreencherDadosInformativos;
+  begin
+    stbArcoDeTreinamento.Panels[0].Text := DateToStr(Date);
+    stbArcoDeTreinamento.Panels[1].Text := TimeToStr(Time);
+    stbArcoDeTreinamento.Panels[2].Text := 'Bem-Vindo ao Arco De Treinamento!';
+  end;
+
+  procedure TfrmArcoDeTreinamento.tmrArcoDeTreinamentoTimer(Sender: TObject);
+  begin
+    PreencherDadosInformativos;
+  end;
+
+  //Define o chamado da tela de listar orçamento e a ação que a invoca
+  procedure TfrmArcoDeTreinamento.ListarOrcamento;
+  var
+    lTelaListarOrcamento: TfrmListarOrcamento;
+  begin
+    lTelaListarOrcamento := TfrmListarOrcamento.Create(nil);
+    try
+      lTelaListarOrcamento.ShowModal;
+    finally
+      lTelaListarOrcamento.Free;
+    end;
+  end;
+
+  procedure TfrmArcoDeTreinamento.OrcamentoClick(Sender: TObject);
+  begin
+    ListarOrcamento;
+  end;
+
+  //Define o chamado da tela de listar itens de orçamento e a ação que a invoca
+  procedure TfrmArcoDeTreinamento.ListarItensOrcamento;
+  var
+    lTelaListarItensOrcamento: TfrmListarItemOrcamento;
+  begin
+    lTelaListarItensOrcamento := TfrmListarItemOrcamento.Create(nil);
+    try
+      lTelaListarItensOrcamento.ShowModal;
+    finally
+      lTelaListarItensOrcamento.Free;
+    end;
+  end;
+
+procedure TfrmArcoDeTreinamento.ItensOrcamentoClick(Sender: TObject);
+  begin
+    ListarItensOrcamento;
+  end;
+
+end.
