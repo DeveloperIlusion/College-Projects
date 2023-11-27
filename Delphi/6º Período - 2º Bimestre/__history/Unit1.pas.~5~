@@ -1,0 +1,74 @@
+unit Unit1;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Data.DB, Vcl.Grids,
+  Vcl.DBGrids, Datasnap.DBClient;
+
+type
+  TfrmPrincipal = class(TForm)
+    showAllRegister: TButton;
+    showRegisterQuantity: TButton;
+    showRegisterData: TButton;
+    GroupBox1: TGroupBox;
+    FDadosDataSet: TDBGrid;
+    ClientDataSet1: TClientDataSet;
+  private
+    FDadosDataSet: TClientDataSet;
+    FDadosDataSource: TDataSource;
+
+    procedure Povoar;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+{$R *.dfm}
+
+procedure TfrmPrincipal.Povoar;
+begin
+  FDadosDataSet.FieldDefs.Add('Posicao', ftInteger);
+  FDadosDataSet.FieldDefs.Add('Animal', ftString, 60);
+  FDadosDataSet.FieldDefs.Add('QuantidadePatas', ftInteger);
+
+  FDadosDataSet.CreateDataSet;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 1;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Pato';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 2;
+  FDadosDataSet.Post;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 2;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Cavalo';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 4;
+  FDadosDataSet.Post;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 3;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Gato';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 4;
+  FDadosDataSet.Post;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 4;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Cachorro';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 4;
+  FDadosDataSet.Post;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 5;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Coelho';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 4;
+  FDadosDataSet.Post;
+  FDadosDataSet.Append;
+  FDadosDataSet.FieldByName('Posicao').AsInteger := 6;
+  FDadosDataSet.FieldByName('Animal').AsString := 'Canguru';
+  FDadosDataSet.FieldByName('QuantidadePatas').AsInteger := 2;
+  FDadosDataSet.Post;
+  FDadosDataSet.First;
+end;
+
+end.

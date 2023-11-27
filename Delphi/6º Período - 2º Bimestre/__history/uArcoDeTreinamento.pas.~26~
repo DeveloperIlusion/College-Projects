@@ -1,0 +1,108 @@
+unit uArcoDeTreinamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, Vcl.ComCtrls, Vcl.ExtCtrls;
+
+type
+  TfrmArcoDeTreinamento = class(TForm)
+    stbArcoDeTreinamento: TStatusBar;
+    mmArcoDeTreinamento: TMainMenu;
+    Cadastro1: TMenuItem;
+    Aluno: TMenuItem;
+    tmrArcoDeTreinamento: TTimer;
+    Endereco: TMenuItem;
+    Compras: TMenuItem;
+    procedure tmrArcoDeTreinamentoTimer(Sender: TObject);
+    procedure EnderecoClick(Sender: TObject);
+    procedure AlunoClick(Sender: TObject);
+    procedure ComprasClick(Sender: TObject);
+  private
+    procedure PreencherDadosInformativos;
+    procedure ListarAluno;
+    procedure ListarEndereco;
+    procedure ListarCompras;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmArcoDeTreinamento: TfrmArcoDeTreinamento;
+
+implementation
+
+{$R *.dfm}
+
+  uses
+    uListarAluno, uListarEndereco, uListarCompras;
+
+  //Define os dados que preenchem a barra de status e os preenche
+  procedure TfrmArcoDeTreinamento.PreencherDadosInformativos;
+  begin
+    stbArcoDeTreinamento.Panels[0].Text := DateToStr(Date);
+    stbArcoDeTreinamento.Panels[1].Text := TimeToStr(Time);
+    stbArcoDeTreinamento.Panels[2].Text := 'Bem-Vindo ao Arco De Treinamento!';
+  end;
+
+  procedure TfrmArcoDeTreinamento.tmrArcoDeTreinamentoTimer(Sender: TObject);
+  begin
+    PreencherDadosInformativos;
+  end;
+
+  //Define o chamado da tela de listar aluno e a ação que a invoca
+  procedure TfrmArcoDeTreinamento.ListarAluno;
+  var
+    lTelaListarAluno: TfrmListarAluno;
+  begin
+    lTelaListarAluno := TfrmListarAluno.Create(nil);
+    try
+      lTelaListarAluno.ShowModal;
+    finally
+      lTelaListarAluno.Free;
+    end;
+  end;
+
+  procedure TfrmArcoDeTreinamento.AlunoClick(Sender: TObject);
+  begin
+    ListarAluno;
+  end;
+
+  //Define o chamado da tela de listar endereços e a ação que a invoca
+  procedure TfrmArcoDeTreinamento.ListarEndereco;
+  var
+    lTelaListarEndereco: TfrmListarEndereco;
+  begin
+    lTelaListarEndereco := TfrmListarEndereco.Create(nil);
+    try
+      lTelaListarEndereco.ShowModal;
+    finally
+      lTelaListarEndereco.Free;
+    end;
+  end;
+
+procedure TfrmArcoDeTreinamento.EnderecoClick(Sender: TObject);
+  begin
+    ListarEndereco;
+  end;
+
+  //Define o chamado da tela de listar compras e a ação que a invoca
+  procedure TfrmArcoDeTreinamento.ListarCompras;
+  var
+    lTelaListarCompras: TfrmListarCompras;
+  begin
+    lTelaListarCompras := TfrmListarCompras.Create(nil);
+    try
+      lTelaListarCompras.ShowModal;
+    finally
+      lTelaListarCompras.Free;
+    end;
+  end;
+
+  procedure TfrmArcoDeTreinamento.ComprasClick(Sender: TObject);
+  begin
+    ListarCompras;
+  end;
+
+end.

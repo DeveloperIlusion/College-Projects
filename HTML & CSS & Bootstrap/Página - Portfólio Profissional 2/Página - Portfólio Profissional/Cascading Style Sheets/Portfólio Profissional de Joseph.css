@@ -1,0 +1,56 @@
+body   {
+   vertical-align: center;
+   font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+a {
+    color: seagreen;
+}
+
+#Face { 
+    text-align: center;
+    margin: 0 auto;
+}
+
+#Formação {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#Formação h3 {
+    text-align: left !important;
+    padding: 0 21em;
+}
+
+#Formação UL {
+    text-align: justify !important;
+    padding: 0 25em;
+}
+
+#Preços {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#Preços h3 {
+    text-align: left !important;
+    padding: 0 21em;
+}
+
+table {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#Contato {
+    text-align: center;
+    margin: 0 auto;
+}
+
+#Esquerda {
+    text-align: left;
+}
+
+#Direita {
+    text-align: right;
+}

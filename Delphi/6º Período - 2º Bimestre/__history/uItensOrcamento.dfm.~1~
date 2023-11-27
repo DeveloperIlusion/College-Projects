@@ -1,0 +1,91 @@
+object frmCompras: TfrmCompras
+  Left = 0
+  Top = 0
+  Caption = 'CRUD Compras'
+  ClientHeight = 136
+  ClientWidth = 530
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  OnActivate = FormActivate
+  TextHeight = 15
+  object tpanel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 529
+    Height = 105
+    TabOrder = 0
+    object Label1: TLabel
+      Left = 8
+      Top = 14
+      Width = 43
+      Height = 15
+      Caption = 'Produto'
+    end
+    object Label2: TLabel
+      Left = 408
+      Top = 14
+      Width = 25
+      Height = 15
+      Caption = 'Total'
+    end
+    object Label3: TLabel
+      Left = 8
+      Top = 64
+      Width = 37
+      Height = 15
+      Caption = 'Cliente'
+    end
+    object dbeProduto: TDBEdit
+      Left = 8
+      Top = 35
+      Width = 385
+      Height = 23
+      DataField = 'produto'
+      DataSource = uConexao.sourceCompra
+      TabOrder = 0
+    end
+    object dbeTotal: TDBEdit
+      Left = 408
+      Top = 35
+      Width = 105
+      Height = 23
+      DataField = 'total'
+      DataSource = uConexao.sourceCompra
+      TabOrder = 1
+    end
+    object dblCliente: TDBLookupComboBox
+      Left = 8
+      Top = 82
+      Width = 505
+      Height = 23
+      DataField = 'cliente_id'
+      DataSource = uConexao.sourceCompra
+      KeyField = 'id'
+      ListField = 'nome'
+      ListSource = uConexao.sourceAluno
+      TabOrder = 2
+    end
+  end
+  object btnGravar: TBitBtn
+    Left = 357
+    Top = 111
+    Width = 83
+    Height = 28
+    Caption = 'Gravar'
+    TabOrder = 1
+    OnClick = btnGravarClick
+  end
+  object btnCancelar: TBitBtn
+    Left = 446
+    Top = 111
+    Width = 83
+    Height = 28
+    Caption = 'Cancelar'
+    TabOrder = 2
+    OnClick = btnCancelarClick
+  end
+end

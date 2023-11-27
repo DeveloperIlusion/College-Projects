@@ -1,0 +1,98 @@
+object frmListarAluno: TfrmListarAluno
+  Left = 0
+  Top = 0
+  Caption = 'CRUD Aluno'
+  ClientHeight = 374
+  ClientWidth = 646
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Position = poDesktopCenter
+  OnActivate = FormActivate
+  OnClose = FormClose
+  TextHeight = 15
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 646
+    Height = 25
+    Align = alTop
+    Caption = 'Aluno'
+    TabOrder = 0
+    ExplicitWidth = 641
+  end
+  object dbgListarAluno: TDBGrid
+    Left = 0
+    Top = 24
+    Width = 653
+    Height = 329
+    Align = alCustom
+    DataSource = uConexao.sourceAluno
+    TabOrder = 1
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    OnDrawColumnCell = dbgListarAlunoDrawColumnCell
+    OnDblClick = dbgListarAlunoDblClick
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'id'
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'nome'
+        Width = 446
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'idade'
+        Width = 90
+        Visible = True
+      end>
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 348
+    Width = 646
+    Height = 26
+    Align = alBottom
+    TabOrder = 2
+    ExplicitTop = 343
+    ExplicitWidth = 641
+    object btnExcluir: TBitBtn
+      Left = 570
+      Top = 0
+      Width = 75
+      Height = 25
+      Caption = 'Excluir'
+      TabOrder = 0
+      OnClick = btnExcluirClick
+    end
+    object btnEditar: TBitBtn
+      Left = 489
+      Top = 1
+      Width = 75
+      Height = 25
+      Caption = 'Editar'
+      TabOrder = 1
+      OnClick = btnEditarClick
+    end
+    object btnInserir: TBitBtn
+      Left = 408
+      Top = 1
+      Width = 75
+      Height = 25
+      Caption = 'Inserir'
+      TabOrder = 2
+      OnClick = btnInserirClick
+    end
+  end
+end

@@ -1,0 +1,14 @@
+program ArcoDeTreinamento;
+
+uses
+  Vcl.Forms,
+  uArcoDeTreinamento in 'uArcoDeTreinamento.pas' {frmArcoDeTreinamento};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmArcoDeTreinamento, frmArcoDeTreinamento);
+  Application.Run;
+end.

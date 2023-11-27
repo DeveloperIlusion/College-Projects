@@ -1,0 +1,69 @@
+object frmPrincipal: TfrmPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Aprendendo Armazenamento de Dados em Memoria'
+  ClientHeight = 468
+  ClientWidth = 708
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  TextHeight = 15
+  object showAllRegister: TButton
+    Left = 560
+    Top = 416
+    Width = 140
+    Height = 49
+    Caption = 'Exibir &Tudo'
+    TabOrder = 0
+  end
+  object showRegisterQuantity: TButton
+    Left = 353
+    Top = 416
+    Width = 193
+    Height = 49
+    Caption = 'Exibir a &Quantidade de Registros'
+    TabOrder = 1
+  end
+  object showRegisterData: TButton
+    Left = 136
+    Top = 416
+    Width = 211
+    Height = 49
+    Caption = 'Dados do &Registro Selecionado'
+    TabOrder = 2
+  end
+  object GroupBox1: TGroupBox
+    Left = 0
+    Top = 296
+    Width = 700
+    Height = 103
+    Caption = 'Filtrar'
+    TabOrder = 3
+  end
+  object FDadosDataSet: TDBGrid
+    Left = 0
+    Top = 0
+    Width = 713
+    Height = 290
+    TabOrder = 4
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -12
+    TitleFont.Name = 'Segoe UI'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        Visible = True
+      end>
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 576
+    Top = 192
+  end
+end

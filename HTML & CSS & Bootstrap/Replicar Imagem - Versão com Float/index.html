@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> Biblioteca da FASM </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div class="container-fluid" id="cabecalho">
+            <br>
+            <img src="imagens/Logo.png" width="250px" id="logo">
+            
+            <a class="btn btn-outline-secondary" role="button" id="botaoHome" href="index.html">Home</a>
+            <a class="btn btn-outline-secondary" role="button" id="botaoTabela" href="#tabela">Tabela</a>
+            <a class="btn btn-outline-secondary" role="button" id="botaoFormulario" href="#formulario">Formulário</a>
+            <br>
+        </div>
+        <br>
+        <div class="container">
+            <h1 id="titulo">Exemplo Tabela</h1>
+            <hr>
+            <button type="button" class="btn btn-secondary" id="botaoRegistro">Novo Registro</button>
+
+            <table class="table table-bordered" id="tabela">
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Municipio</th>
+                    <th>UF</th>
+                    <th>Opções</th>
+                </tr>
+
+                <tr id="linhaColoridaTabela">
+                    <th scope="row">1</th>
+                    <td>João da Silva</td>
+                    <td>(32) 98877-6655</td>
+                    <td>Laranjal</td>
+                    <td>MG</td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Visualizar</button>
+                    <button type="button" class="btn btn-danger">Alterar</button>
+                    <button type="button" class="btn btn-warning">Excluir</button>
+                    </td>
+                </tr>
+
+                <tr>
+                    <th scope="row">2</th>
+                    <td>Maria José de Oliveira</td>
+                    <td>(32) 99911-2233</td>
+                    <td>Miradouro</td>
+                    <td>MG</td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Visualizar</button>
+                    <button type="button" class="btn btn-danger">Alterar</button>
+                    <button type="button" class="btn btn-warning">Excluir</button>
+                    </td>
+                </tr>
+
+                <tr id="linhaColoridaTabela">
+                    <th scope="row">3</th>
+                    <td>Jsefina</td>
+                    <td>(32) 97722-4453</td>
+                    <td>Muriaé</td>
+                    <td>MG</td>
+                    <td>
+                    <button type="button" class="btn btn-primary">Visualizar</button>
+                    <button type="button" class="btn btn-danger">Alterar</button>
+                    <button type="button" class="btn btn-warning">Excluir</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="container"> 
+            <div class="float-container">
+                <div id="texto">
+                    <h2>Òtima escolha!</h2>
+                    <p>Obrigado por escolher a FASM para realizar a compra! Preencha seus dados para efetuar a compra.</p>
+                </div>
+                <div class="float-child" id="cardLivro">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-header">
+                            <h2 class="card-title">Sua Compra</h2>
+                        </div>
+                        <div class="card-body" id="corpoDoCard">
+                            <div class="card" id="imagemLivro">
+                                <img src="imagens/livro3.jpg" class="card-img-top" alt="Programação Profissional em HTML 5">
+                            </div>
+                            <h6>Produto</h6>
+                            <p class="card-text">Programação Profissional em HTML 5</p>
+                            <h6>N° de páginas</h6>
+                            <p class="card-text">480</p>
+                            <h6>Preço</h6>
+                            <p class="card-text">R$ 129,00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="float-child" id="formulario">
+                    <form class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="nomeCompleto">Nome Completo</label>
+                            <input type="email" class="form-control" id="nomeCompleto">
+                        </div>
+    
+                        <div class="col-md-6">
+                            <label class="form-label" for="numeroCartao">Número do Cartão</label>
+                            <input type="password" class="form-control" id="numeroCartao" placeholder="0000 0000 0000 0000">
+                        </div>
+    
+                        <div class="col-md-6">
+                            <label class="form-label" for="inputEmail">E-mail</label>
+                            <div class="input-group">
+                                <div class="input-group-text">@</div>
+                                <input type="email" class="form-control" id="inputEmail" placeholder="Informe seu e-mail">
+                            </div>
+                        </div>
+    
+                        <div class="col-md-6">
+                        <label class="form-label" for="bandeira">Bandeira</label>
+                        <select class="form-select" type="" id="bandeira">
+                            <option selected>MasterCard</option>
+                            <option>Visa</option>
+                            <option>American Express</option>
+                            <option>Elo</option>
+                            <option>Discover Network</option>
+                        </select>
+                        </div>
+    
+                        <div class="col-md-6">
+                            <label for="cpf" class="form-label">CPF</label>
+                            <input type="text" class="form-control" id="cpf" placeholder="000.000.000-00">
+                        </div>
+    
+                        <div class="col-md-6">
+                            <label for="validade" class="form-label">Validade</label>
+                            <input type="text" class="form-control" id="validade">
+                        </div>
+    
+                        <div class="col-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="receberInformacoes">
+                                <label class="form-check-label" for="receberInformacoes">
+                                Quero receber informações sobre a FASM
+                                </label>
+                            </div>
+                        </div>
+                      
+                        <div class="col-8" id="botaoConfirma" class="d-flex bd-highlight mb-3">
+                            <button type="submit" class="btn btn-primary" for="botaoConfirma" class="ms-auto p-2 bd-highlight">Confirmar Pedido</button>
+                        </div>
+                       
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <footer>
+        
+        <p align="center"> Todos os direitos reservados. </p>
+
+    </footer>
+</html>

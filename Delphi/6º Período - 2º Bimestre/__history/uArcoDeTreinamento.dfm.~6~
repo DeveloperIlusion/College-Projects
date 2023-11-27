@@ -1,0 +1,44 @@
+object frmArcoDeTreinamento: TfrmArcoDeTreinamento
+  Left = 0
+  Top = 0
+  Caption = 'Menu Principal'
+  ClientHeight = 442
+  ClientWidth = 628
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -12
+  Font.Name = 'Segoe UI'
+  Font.Style = []
+  Menu = mmArcoDeTreinamento
+  TextHeight = 15
+  object stbArcoDeTreinamento: TStatusBar
+    Left = 0
+    Top = 423
+    Width = 628
+    Height = 19
+    Panels = <
+      item
+        Width = 50
+      end
+      item
+        Width = 50
+      end
+      item
+        Width = 50
+      end>
+    ExplicitLeft = 352
+    ExplicitTop = 376
+    ExplicitWidth = 0
+  end
+  object mmArcoDeTreinamento: TMainMenu
+    Left = 368
+    Top = 176
+    object Cadastro1: TMenuItem
+      Caption = 'Cadastro'
+      object Aluno1: TMenuItem
+        Caption = 'Aluno'
+      end
+    end
+  end
+end

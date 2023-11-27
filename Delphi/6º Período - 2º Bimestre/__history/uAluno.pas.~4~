@@ -1,0 +1,53 @@
+unit uAluno;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Mask, Vcl.ExtCtrls,
+  Vcl.DBCtrls, Vcl.Buttons, uTipoOperacao;
+
+type
+  TfrmAluno = class(TForm)
+    btnCancelar: TBitBtn;
+    btnGravar: TBitBtn;
+    dbeNome: TDBEdit;
+    dbeIdade: TDBEdit;
+    Label1: TLabel;
+    Label2: TLabel;
+  private
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+    { Private declarations }
+  public
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+    { Public declarations }
+  end;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+procedure TfrmAluno.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo aluno';
+      DM.qryAluno.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando aluno';
+      DM.qryAluno.Edit;
+    end;
+  end;
+  dbeNome.SetFocus;
+end;
+
+end.

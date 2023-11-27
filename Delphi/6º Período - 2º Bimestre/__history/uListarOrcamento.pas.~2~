@@ -1,0 +1,117 @@
+unit uListarOrcamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, uTipoOperacao, uAluno;
+
+type
+  TfrmListarOrcamento = class(TForm)
+    Panel1: TPanel;
+    dbgListarAluno: TDBGrid;
+    Panel2: TPanel;
+    btnExcluir: TBitBtn;
+    btnEditar: TBitBtn;
+    btnInserir: TBitBtn;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure dbgListarAlunoDblClick(Sender: TObject);
+    procedure dbgListarAlunoDrawColumnCell(Sender: TObject; const Rect: TRect;
+      DataCol: Integer; Column: TColumn; State: TGridDrawState);
+    procedure btnInserirClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnExcluirClick(Sender: TObject);
+  private
+    procedure Excluir;
+    procedure ControlarVisibilidadeDosBotoes;
+    procedure AbrirCadastro(const pTipoOperacao: TTipoOperacao);
+  public
+    { Public declarations }
+  end;
+
+var
+  frmListarOrcamento: TfrmListarOrcamento;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, uFuncoes, System.SysUtils;
+
+  //Define o chamado da operação de exclusão
+  procedure TfrmListarOrcamento.Excluir;
+  begin
+    if uConexao.queryAluno.IsEmpty then
+      Exit;
+    if (not Pergunta('Deseja realmente excluir o aluno?')) then
+      Exit;
+    uConexao.queryAluno.Delete;
+  end;
+
+  procedure TfrmListarOrcamento.btnExcluirClick(Sender: TObject);
+  begin
+    Excluir;
+    ControlarVisibilidadeDosBotoes;
+  end;
+
+  //Define o chamado da operação de inserção
+  procedure TfrmListarOrcamento.btnInserirClick(Sender: TObject);
+  begin
+    AbrirCadastro(topInserir);
+    ControlarVisibilidadeDosBotoes;
+  end;
+
+  //Define o chamado da operação de edição
+  procedure TfrmListarOrcamento.btnEditarClick(Sender: TObject);
+  begin
+     AbrirCadastro(topEditar);
+  end;
+
+//Inicia o formulário com os dados e os botões controlados ao abrir a tela
+  procedure TfrmListarOrcamento.ControlarVisibilidadeDosBotoes;
+  begin
+    btnEditar.Enabled := (not uConexao.queryAluno.IsEmpty);
+    btnExcluir.Enabled := (not uConexao.queryAluno.IsEmpty);
+  end;
+
+  procedure TfrmListarOrcamento.FormActivate(Sender: TObject);
+  begin
+    AtivarQuery(uConexao.queryAluno, topAbrir);
+    ControlarVisibilidadeDosBotoes;
+  end;
+
+  //Ao encerrar o formulário, fecha a query
+  procedure TfrmListarOrcamento.FormClose(Sender: TObject; var Action: TCloseAction);
+  begin
+    AtivarQuery(uConexao.queryAluno, topFechar);
+  end;
+
+  //Abre o formulário de aluno onde iremos inserir os dados
+  procedure TfrmListarOrcamento.AbrirCadastro(const pTipoOperacao: TTipoOperacao);
+  var
+    lAluno: TfrmAluno;
+  begin
+    lAluno := TfrmAluno.Create(nil);
+    try
+      lAluno.TipoOperacao := pTipoOperacao;
+      lAluno.ShowModal;
+    finally
+      lAluno.Free;
+    end;
+  end;
+
+  procedure TfrmListarOrcamento.dbgListarAlunoDblClick(Sender: TObject);
+  begin
+      AbrirCadastro(topEditar);
+  end;
+
+  //Personaliza a coluna do formulário para ficar zebrada
+  procedure TfrmListarOrcamento.dbgListarAlunoDrawColumnCell(Sender: TObject;
+  const Rect: TRect; DataCol: Integer; Column: TColumn; State: TGridDrawState);
+  begin
+    ZebrarGrid(Sender, uConexao.queryAluno, Rect, Column, State);
+  end;
+
+end.

@@ -1,0 +1,40 @@
+unit frmArcoDeTreinamento;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ComCtrls, Vcl.Menus, Vcl.ExtCtrls;
+
+type
+  TfrmPrincipal = class(TForm)
+    mmPrincipal: TMainMenu;
+    Cadastrar1: TMenuItem;
+    Cadastrar2: TMenuItem;
+    StatusBar: TStatusBar;
+    tmrPrincipal: TTimer;
+    procedure tmrPrincipalTimer(Sender: TObject);
+  private
+    procedure PreencherDadosInformativos;
+  public
+
+  end;
+
+var
+  frmPrincipal: TfrmPrincipal;
+
+implementation
+
+procedure TfrmPrincipal.PreencherDadosInformativos;
+begin
+  StatusBar.Panels[0].Text := DateToStr(Date);
+  StatusBar.Panels[1].Text := TimeToStr(Time);
+  StatusBar.Panels[2].Text := 'Arco de Treinamento';
+end;
+
+procedure TfrmPrincipal.tmrPrincipalTimer(Sender: TObject);
+begin
+  PreencherDadosInformativos;
+end;
+
+end.

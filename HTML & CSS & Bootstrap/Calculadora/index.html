@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <!-- Programado por Bruno Deluca Satil Cassiano no dia 22/09/2021 -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Calculadora de Juros</title>
+
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="js/jquery-3.6.0.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/calculadora.js"></script>
+    </head>
+    <body>
+        <div class="container mt-5">
+            <h1>Calculadora de Juros</h1>
+            <form> 
+                <div class="mb-3">
+                    <label class="form-label" for="Valor">Valor</label>
+                    <input type="text" class="form-control" id="Valor" placeholder="Informe o valor original">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" for="Juros">Taxa de Juros | Taxa de Desconto</label>
+                    <input type="text" class="form-control" id="Juros" placeholder="Informe a taxa de juros | Caso seja desconto, adicione o símbolo - na frente do número!">
+                </div>
+
+                <button type="button" id="btn-calcular" class="btn btn-success">Calcular</button>
+
+                <div class="mt-3" id="mensagem"></div>
+            </form>
+
+        </div>
+    </body>
+</html>

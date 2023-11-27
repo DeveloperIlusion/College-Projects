@@ -1,0 +1,22 @@
+program ArcoDeTreinamento;
+
+uses
+  Vcl.Forms,
+  uArcoDeTreinamento in 'uArcoDeTreinamento.pas' {frmArcoDeTreinamento},
+  uDM in 'uDM.pas' {uConexao},
+  uListarAluno in 'uListarAluno.pas' {frmListarAluno},
+  uFuncoes in 'uFuncoes.pas',
+  uTipoOperacao in 'uTipoOperacao.pas',
+  uAluno in 'uAluno.pas' {frmAluno},
+  uEndereco in 'uEndereco.pas' {fmrEndereco},
+  uListarEndereco in 'uListarEndereco.pas' {frmListarEndereco};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmArcoDeTreinamento, frmArcoDeTreinamento);
+  Application.CreateForm(TuConexao, uConexao);
+  Application.Run;
+end.

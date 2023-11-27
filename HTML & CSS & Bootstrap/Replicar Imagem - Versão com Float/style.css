@@ -1,0 +1,101 @@
+body {
+    align-content: center;
+    overflow-x: hidden;
+}
+
+#cabecalho {
+    background-color: #e9ecef;
+    padding: 20px;
+}
+
+#logo {
+    width: 150px;
+    margin-bottom: 20px;
+}
+
+#botaoHome {
+    margin-left: 30px;
+    margin-top: -18px;
+}
+
+#botaoTabela {
+    margin-top: -18px;
+}
+
+#botaoFormulario {
+    margin-top: -18px;
+}
+
+#titulo {
+    margin-bottom: -17px;
+}
+
+#linhaColoridaTabela {
+    background-color: #f2f2f2;
+}
+
+#tabela {
+    padding-right: -120px;
+}
+
+#botaoRegistro {
+    margin-top: -8px;
+    margin-bottom: 10px;
+}
+
+.float-container {
+    border: 3px solid #fff;
+    padding: 5px;
+}
+
+.float-child {
+    float: left;
+    padding: 20px;
+}
+
+#cardLivro {
+    width: 20%;
+    margin-top: -25px;
+    margin-left: -30px;
+    margin-right: 0px;
+}
+
+#corpoDoCard {
+    padding: 20px;
+}
+
+#imagemLivro {
+    padding: 5px;
+}
+
+#formulario {
+    border: solid 1px #dee2e6;
+    border-style: solid;
+    width: 70%;
+    padding: 10px;
+    margin: 0px;
+    margin-top: -5px;
+    margin-left: 140px;
+}
+
+#texto {
+    margin-left: -10px;
+}
+
+#botaoConfirma {
+    position: relative;
+    padding: 0px;
+}
+
+#cardFormulario {
+    resize: both;
+    overflow: auto;
+}
+
+footer {
+    clear: both;
+    padding-top: 15px;
+    padding-bottom: 1px;
+    margin-bottom: 15px;
+    background-color: #e9ecef;
+}

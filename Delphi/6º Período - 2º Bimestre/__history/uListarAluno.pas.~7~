@@ -1,0 +1,68 @@
+unit uListarAluno;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Data.DB, Vcl.StdCtrls,
+  Vcl.Buttons, Vcl.Grids, Vcl.DBGrids, uTipoOperacao;
+
+type
+  TfrmListarAluno = class(TForm)
+    Panel1: TPanel;
+    dbgListarAluno: TDBGrid;
+    Panel2: TPanel;
+    btnExcluir: TBitBtn;
+    btnEditar: TBitBtn;
+    btnInserir: TBitBtn;
+    procedure FormActivate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+  private
+    procedure ExcluirCidade;
+    procedure ControlarVisibilidadeDosBotoes;
+    procedure AbrirCadastroDeCidade(const pTipoOperacao: TTipoOperacao);
+    function ExisteClienteParaACidade(const pCodigoCidade: Integer): Boolean;
+  public
+    { Public declarations }
+  end;
+
+var
+  frmListarAluno: TfrmListarAluno;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, uFuncoes, System.SysUtils;
+
+  procedure TfrmListarAluno.ControlarVisibilidadeDosBotoes;
+  begin
+    btnEditar.Enabled := (not uConexao.queryAluno.IsEmpty);
+    btnExcluir.Enabled := (not uConexao.queryAluno.IsEmpty);
+  end;
+
+  procedure TfrmListarAluno.FormActivate(Sender: TObject);
+  begin
+    AtivarQuery(uConexao.queryAluno, topAbrir);
+    ControlarVisibilidadeDosBotoes;
+  end;
+
+  procedure TfrmListarAluno.FormClose(Sender: TObject; var Action: TCloseAction);
+  begin
+    AtivarQuery(uConexao.queryAluno, topFechar);
+  end;
+
+  procedure TfrmListarAluno.AbrirCadastroDeCidade(const pTipoOperacao: TTipoOperacao);
+  var
+    lAluno: TfrmAluno;
+  begin
+    lAluno := TfrmAluno.Create(nil);
+    try
+      lAluno.TipoOperacao := pTipoOperacao;
+      lAluno.ShowModal;
+    finally
+      lAluno.Free;
+    end;
+  end;
+
+end.

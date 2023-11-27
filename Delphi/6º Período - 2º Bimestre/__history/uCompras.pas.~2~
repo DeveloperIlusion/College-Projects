@@ -1,0 +1,64 @@
+unit uCompras;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Mask,
+  Vcl.ExtCtrls, Vcl.DBCtrls, uTipoOperacao;
+
+type
+  TfrmCompras = class(TForm)
+    tpanel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    dbeNome: TDBEdit;
+    dbeIdade: TDBEdit;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+    FTipoOperacao: TTipoOperacao;
+    procedure Carregar;
+    procedure Gravar;
+    procedure Cancelar;
+    procedure ValidarDados;
+  public
+    { Public declarations }
+    property TipoOperacao: TTipoOperacao read FTipoOperacao write FTipoOperacao;
+  end;
+
+var
+  frmCompras: TfrmCompras;
+
+implementation
+
+{$R *.dfm}
+
+uses uDM, Data.DB, uFuncoes;
+
+//Define e chama a função que setta o tipo de ação ao abrirmos o form
+procedure TfrmCompras.Carregar;
+begin
+  case TipoOperacao of
+    topInserir:
+    begin
+      Caption := 'Inserindo compra';
+      uConexao.queryCompra.Append;
+    end;
+    topEditar:
+    begin
+      Caption := 'Editando compra';
+      uConexao.queryCompra.Edit;
+    end;
+  end;
+  dbeNome.SetFocus;
+end;
+
+procedure TfrmCompras.FormActivate(Sender: TObject);
+begin
+  Carregar;
+end;
+
+end.
